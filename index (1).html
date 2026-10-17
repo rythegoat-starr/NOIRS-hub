@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox Nexus — Elite Code Center</title>
+  <style>
+.rnx{
+  --rnx-bg:#0b0c12;--rnx-panel:#121521;--rnx-line:#262a3a;
+  --rnx-text:#f5f5ff;--rnx-muted:#969bb2;--rnx-purple:#9c7bff;
+  --rnx-green:#71edbd;
+  color:var(--rnx-text);font-family:Inter,system-ui,-apple-system,sans-serif;
+  background:radial-gradient(ellipse at 50% -15%,#33205e 0,transparent 48%),var(--rnx-bg);
+  border:1px solid var(--rnx-line);border-radius:24px;overflow:hidden;
+  max-width:1200px;margin:20px auto;position:relative;
+}
+.rnx *{box-sizing:border-box}
+.rnx button,.rnx input,.rnx select{font:inherit}
+.rnx button{cursor:pointer}
+.rnx button:focus-visible,.rnx input:focus-visible,.rnx select:focus-visible,
+.rnx a:focus-visible{outline:2px solid var(--rnx-purple);outline-offset:3px}
+.rnx-top{padding:30px 24px 20px;border-bottom:1px solid var(--rnx-line)}
+.rnx-brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:-.5px}
+.rnx-logo{width:39px;height:39px;border-radius:13px;background:linear-gradient(140deg,#c4a7ff,#6544cf);display:grid;place-items:center;color:#fff;font-size:21px;box-shadow:0 5px 25px #7954ff45}
+.rnx-eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c5b2ff;font-weight:800;margin-top:30px}
+.rnx h2{font-size:clamp(30px,5vw,48px);letter-spacing:-2px;line-height:1.04;margin:10px 0 12px}
+.rnx h2 span{color:#b9a0ff}
+.rnx-desc{max-width:600px;color:#a9adc2;line-height:1.65;font-size:14px}
+.rnx-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rnx-live{display:inline-flex;align-items:center;gap:8px;border:1px solid #31364a;background:#141725;padding:8px 11px;border-radius:999px;color:#c5c8d8;font-size:11px}
+.rnx-dot{width:7px;height:7px;background:var(--rnx-green);border-radius:50%;box-shadow:0 0 10px #71edbd70}
+.rnx-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:18px 24px}
+.rnx-stat{background:#121521b8;border:1px solid var(--rnx-line);border-radius:15px;padding:15px}
+.rnx-stat strong{display:block;font-size:25px;letter-spacing:-1px}
+.rnx-stat small{color:var(--rnx-muted);font-size:11px}
+.rnx-controls{padding:0 24px 20px}
+.rnx-searchrow{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:10px}
+.rnx-searchwrap{position:relative}
+.rnx-searchicon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9298b0;pointer-events:none}
+.rnx-input,.rnx-select{width:100%;min-height:47px;color:#f5f5ff;background:#121521;border:1px solid #303449;border-radius:13px;padding:12px 14px}
+.rnx-input{padding-left:40px}
+.rnx-input::placeholder{color:#777e97}
+.rnx-tabs{display:flex;gap:8px;overflow-x:auto;padding:15px 0 2px;scrollbar-width:thin}
+.rnx-tab{white-space:nowrap;border:1px solid #2a2e40;background:#121521;color:#b4b8cc;padding:9px 13px;border-radius:999px;font-size:12px;font-weight:700}
+.rnx-tab[aria-pressed="true"]{background:#8b69f0;color:white;border-color:#a88cff;box-shadow:0 0 20px #8b69f01c}
+.rnx-feature{margin:0 24px 22px;padding:19px;border:1px solid #44366d;border-radius:18px;background:linear-gradient(115deg,#211a38,#131622 70%);display:flex;justify-content:space-between;gap:18px;align-items:center}
+.rnx-feature h3{margin:5px 0;font-size:19px;letter-spacing:-.4px}
+.rnx-feature p{color:#aeb0c4;font-size:12px;line-height:1.55;margin:5px 0 0}
+.rnx-featuretag{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#c5b2ff;font-weight:850}
+.rnx-featurebtn{flex-shrink:0;border:0;border-radius:11px;padding:12px 14px;background:#9c7bff;color:white;font-weight:800}
+.rnx-listhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 24px 13px}
+.rnx-listhead h3{font-size:17px;margin:0}
+.rnx-listhead span{color:var(--rnx-muted);font-size:12px}
+.rnx-grid{padding:0 24px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rnx-card{min-width:0;background:linear-gradient(145deg,#171a28,#10121b);border:1px solid #292d40;border-radius:17px;padding:16px;transition:transform .18s,border-color .18s,background .18s}
+.rnx-card:hover{transform:translateY(-3px);border-color:#7156bb;background:linear-gradient(145deg,#201b33,#11131d)}
+.rnx-cardtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.rnx-game{font-size:11px;color:#b9a0ff;font-weight:800;letter-spacing:.3px}
+.rnx-status{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#e4cc9c;background:#393022;border:1px solid #5b492f;border-radius:999px;padding:5px 7px;white-space:nowrap}
+.rnx-code{font-size:17px;font-weight:850;letter-spacing:-.4px;overflow-wrap:anywhere;margin:16px 0 7px}
+.rnx-reward{color:#aeb2c7;font-size:12px;min-height:32px;line-height:1.5}
+.rnx-cardbottom{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:15px;padding-top:13px;border-top:1px solid #292d3d}
+.rnx-source{color:#b9a0ff;text-decoration:none;font-size:11px;font-weight:700}
+.rnx-source:hover{text-decoration:underline}
+.rnx-copy{border:1px solid #5e4b9a;background:#35265b;color:#f6f1ff;padding:9px 12px;border-radius:10px;font-size:11px;font-weight:800}
+.rnx-copy:hover{background:#4b357b}
+.rnx-copy[disabled]{opacity:.7;cursor:default}
+.rnx-empty{grid-column:1/-1;text-align:center;padding:38px 15px;border:1px dashed #34384c;border-radius:15px;color:#aeb2c7}
+.rnx-foot{padding:17px 24px;border-top:1px solid var(--rnx-line);background:#0d0f17;color:#898fa7;font-size:11px;line-height:1.7}
+.rnx-foot strong{color:#c4c8d8}
+.rnx-toast{position:sticky;bottom:12px;z-index:5;margin:0 18px 18px;padding:12px 16px;border:1px solid #4e4380;background:#211a37;color:#fff;border-radius:12px;box-shadow:0 8px 35px #0007;font-size:13px}
+.rnx-toast[hidden]{display:none}
+@media(max-width:600px){
+ .rnx{border-radius:18px;margin:10px auto}
+ .rnx-top{padding:23px 17px 17px}
+ .rnx-stats{padding:14px 17px;gap:7px}
+ .rnx-stat{padding:12px 10px}
+ .rnx-stat strong{font-size:21px}
+ .rnx-stat small{font-size:10px}
+ .rnx-controls{padding:0 17px 17px}
+ .rnx-searchrow{grid-template-columns:1fr}
+ .rnx-feature{margin:0 17px 19px;padding:15px}
+ .rnx-featurebtn{padding:10px;font-size:11px}
+ .rnx-listhead{padding:0 17px 12px}
+ .rnx-grid{padding:0 17px 20px;grid-template-columns:1fr;gap:10px}
+ .rnx-foot{padding:15px 17px}
+ .rnx-code{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .rnx *{scroll-behavior:auto!important;transition:none!important}
+}
+body {
+  margin: 0;
+  background: #0b0c12;
+  min-height: 100vh;
+}
+  </style>
+</head>
+<body>
+<section class="rnx" id="robloxNexusCodes">
+  <header class="rnx-top">
+    <div class="rnx-topline">
+      <div class="rnx-brand">
+        <div class="rnx-logo" aria-hidden="true">N</div>
+        <span>ROBLOX <span style="color:#b9a0ff">NEXUS</span></span>
+      </div>
+      <div class="rnx-live"><span class="rnx-dot"></span> CODE DIRECTORY</div>
+    </div>
+    <div class="rnx-eyebrow">The player advantage</div>
+    <h2>Unlock your next<br><span>big reward.</span></h2>
+    <p class="rnx-desc">Discover game codes, search rewards, and copy codes in one tap. Each listing links to its published source.</p>
+  </header>
+
+  <div class="rnx-stats">
+    <div class="rnx-stat"><strong id="rnxTotal">0</strong><small>Listed codes</small></div>
+    <div class="rnx-stat"><strong id="rnxGames">0</strong><small>Games covered</small></div>
+    <div class="rnx-stat"><strong id="rnxCopied">0</strong><small>Codes copied this visit</small></div>
+  </div>
+
+  <div class="rnx-controls">
+    <div class="rnx-searchrow">
+      <label class="rnx-searchwrap">
+        <span class="rnx-searchicon" aria-hidden="true">⌕</span>
+        <input class="rnx-input" id="rnxSearch" type="search"
+          placeholder="Search a game, code, or reward..."
+          aria-label="Search game codes">
+      </label>
+      <select class="rnx-select" id="rnxSort" aria-label="Sort codes">
+        <option value="game">Sort: Game name</option>
+        <option value="code">Sort: Code name</option>
+      </select>
+    </div>
+    <div class="rnx-tabs" id="rnxFilters" aria-label="Filter by game">
+      <button class="rnx-tab" type="button" data-game="all" aria-pressed="true">All games</button>
+      <button class="rnx-tab" type="button" data-game="Blox Fruits" aria-pressed="false">Blox Fruits</button>
+      <button class="rnx-tab" type="button" data-game="Bee Swarm Simulator" aria-pressed="false">Bee Swarm</button>
+      <button class="rnx-tab" type="button" data-game="Blade Ball" aria-pressed="false">Blade Ball</button>
+    </div>
+  </div>
+
+  <section class="rnx-feature" aria-label="Featured code">
+    <div>
+      <div class="rnx-featuretag">Quick tip / 01</div>
+      <h3>Claim rewards before they expire.</h3>
+      <p>Check the linked source and redeem codes in the game's official redemption system. A published listing is not proof that a code is still active.</p>
+    </div>
+    <button type="button" class="rnx-featurebtn" id="rnxBrowse">Browse codes ↓</button>
+  </section>
+
+  <div class="rnx-listhead">
+    <h3>Code directory</h3>
+    <span id="rnxResultCount" aria-live="polite">Loading list…</span>
+  </div>
+  <div class="rnx-grid" id="rnxCodeGrid" aria-live="polite"></div>
+
+  <div class="rnx-foot">
+    <strong>Code status: source-listed, not verified.</strong>
+    Codes and rewards may change or expire. Roblox Nexus does not redeem codes for you, and this static list does not automatically check game servers. Follow each source link and never share your Roblox password to claim a reward.
+  </div>
+  <div class="rnx-toast" id="rnxToast" role="status" aria-live="polite" hidden></div>
+</section>
+
+<script>
+(() => {
+  "use strict";
+
+  const root = document.getElementById("robloxNexusCodes");
+  if (!root || root.dataset.initialized === "true") return;
+  root.dataset.initialized = "true";
+
+  const codeData = [
+    {
+      game:"Blox Fruits", code:"LIGHTNINGABUSE",
+      reward:"2x EXP boost",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Blox Fruits", code:"KITT_RESET",
+      reward:"Stat reset",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Blox Fruits", code:"SUB2CAPTAINMAUI",
+      reward:"2x EXP boost",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Blox Fruits", code:"SUB2GAMERROBOT_EXP1",
+      reward:"2x EXP boost",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Blox Fruits", code:"SUB2GAMERROBOT_RESET1",
+      reward:"Stat reset",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Blox Fruits", code:"BIGNEWS",
+      reward:"In-game title",
+      source:"https://www.shanethegamer.com/redeem-codes/roblox-blox-fruits-codes/"
+    },
+    {
+      game:"Bee Swarm Simulator", code:"BeesBuzz123",
+      reward:"Various in-game items",
+      source:"https://www.pcgamer.com/roblox/bee-swarm-simulator-codes/"
+    },
+    {
+      game:"Bee Swarm Simulator", code:"ClubBean",
+      reward:"Magic Bean and boosts",
+      source:"https://www.pcgamer.com/roblox/bee-swarm-simulator-codes/"
+    },
+    {
+      game:"Bee Swarm Simulator", code:"BopMaster",
+      reward:"Tickets",
+      source:"https://www.pcgamer.com/roblox/bee-swarm-simulator-codes/"
+    },
+    {
+      game:"Bee Swarm Simulator", code:"Nectar",
+      reward:"Honey",
+      source:"https://www.pcgamer.com/roblox/bee-swarm-simulator-codes/"
+    },
+    {
+      game:"Blade Ball", code:"BATTLEROYALE",
+      reward:"Wheel spin",
+      source:"https://bloxodes.com/codes/blade-ball"
+    },
+    {
+      game:"Blade Ball", code:"GOODVSEVIL",
+      reward:"Wheel spin",
+      source:"https://bloxodes.com/codes/blade-ball"
+    },
+    {
+      game:"Blade Ball", code:"DUNGEONSRELEASE",
+      reward:"Dungeon Runes",
+      source:"https://bloxodes.com/codes/blade-ball"
+    },
+    {
+      game:"Blade Ball", code:"4BVISITS",
+      reward:"Sword skin",
+      source:"https://bloxodes.com/codes/blade-ball"
+    }
+  ];
+
+  const $ = id => root.querySelector("#" + id);
+  const grid = $("rnxCodeGrid");
+  const search = $("rnxSearch");
+  const sort = $("rnxSort");
+  const toast = $("rnxToast");
+  let selectedGame = "all";
+  let copiedCount = 0;
+  let toastTimer;
+
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[ch]);
+
+  $("rnxTotal").textContent = codeData.length;
+  $("rnxGames").textContent = new Set(codeData.map(item => item.game)).size;
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 2600);
+  }
+
+  function render() {
+    const query = search.value.trim().toLowerCase();
+
+    let filtered = codeData.filter(item => {
+      const matchesGame =
+        selectedGame === "all" || item.game === selectedGame;
+      const text = `${item.game} ${item.code} ${item.reward}`.toLowerCase();
+      return matchesGame && text.includes(query);
+    });
+
+    filtered.sort((a, b) => {
+      if (sort.value === "code") return a.code.localeCompare(b.code);
+      return a.game.localeCompare(b.game) || a.code.localeCompare(b.code);
+    });
+
+    $("rnxResultCount").textContent =
+      `${filtered.length} ${filtered.length === 1 ? "result" : "results"}`;
+
+    if (!filtered.length) {
+      grid.innerHTML = `
+        <div class="rnx-empty">
+          <div style="font-size:28px;margin-bottom:8px">⌕</div>
+          <strong>No matching codes</strong>
+          <p>Try another search or select All games.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(item => {
+      const index = codeData.indexOf(item);
+      return `
+        <article class="rnx-card">
+          <div class="rnx-cardtop">
+            <div class="rnx-game">${escapeHTML(item.game)}</div>
+            <span class="rnx-status">Unverified</span>
+          </div>
+          <div class="rnx-code">${escapeHTML(item.code)}</div>
+          <div class="rnx-reward">${escapeHTML(item.reward)}</div>
+          <div class="rnx-cardbottom">
+            <a class="rnx-source"
+               href="${escapeHTML(item.source)}"
+               target="_blank" rel="noopener noreferrer">View source ↗</a>
+            <button class="rnx-copy" type="button" data-copy-index="${index}">
+              Copy code
+            </button>
+          </div>
+        </article>`;
+    }).join("");
+  }
+
+  $("rnxFilters").addEventListener("click", event => {
+    const button = event.target.closest("button[data-game]");
+    if (!button) return;
+
+    selectedGame = button.dataset.game;
+    $("rnxFilters").querySelectorAll("button[data-game]").forEach(tab => {
+      tab.setAttribute("aria-pressed", String(tab === button));
+    });
+    render();
+  });
+
+  search.addEventListener("input", render);
+  sort.addEventListener("change", render);
+
+  grid.addEventListener("click", async event => {
+    const button = event.target.closest("button[data-copy-index]");
+    if (!button) return;
+
+    const item = codeData[Number(button.dataset.copyIndex)];
+    if (!item) return;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(item.code);
+      } else {
+        const field = document.createElement("textarea");
+        field.value = item.code;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+        const successful = document.execCommand("copy");
+        field.remove();
+        if (!successful) throw new Error("Copy unavailable");
+      }
+
+      copiedCount++;
+      $("rnxCopied").textContent = copiedCount;
+      button.textContent = "Copied ✓";
+      button.disabled = true;
+      showToast(`Copied ${item.code}`);
+      setTimeout(() => {
+        if (button.isConnected) {
+          button.textContent = "Copy code";
+          button.disabled = false;
+        }
+      }, 1200);
+    } catch {
+      showToast("Copy was blocked. Select the code and copy it manually.");
+    }
+  });
+
+  $("rnxBrowse").addEventListener("click", () => {
+    $("rnxCodeGrid").scrollIntoView({behavior:"smooth", block:"start"});
+    search.focus({preventScroll:true});
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
